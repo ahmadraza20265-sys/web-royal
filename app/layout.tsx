@@ -1,26 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap"
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-space",
-  display: "swap"
-});
-
 export const metadata: Metadata = {
-  title: "NovaSpark Digital | AI Automation, Websites & Content",
+  title: "Princess' Construction Inc | Premium Dallas Roofing",
   description:
-    "Premium futuristic digital agency for AI automation, website development, and content creation.",
-  icons: {
-    icon: "/nova-spark-logo.jpeg"
-  }
+    "Princess' Construction Inc is a premium Dallas roofing company for roof inspections, roof repairs, and roof installations."
 };
 
 export default function RootLayout({
@@ -30,9 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
