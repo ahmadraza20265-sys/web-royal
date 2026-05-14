@@ -22,7 +22,7 @@ import {
   X,
   Zap
 } from "lucide-react";
-import { useEffect, useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useState, type ElementType, type FormEvent, type ReactNode } from "react";
 
 type Repo = {
   id: number;
@@ -90,6 +90,8 @@ const whyUs = [
   ["Clean delivery", "Optimized builds, mobile-first layouts, and Vercel-ready deployment practices."],
   ["Business clarity", "Strategy, design, development, and content aligned to one measurable goal."]
 ];
+
+const whyIcons = [Zap, Star, ShieldCheck, CheckCircle2];
 
 const reveal = {
   hidden: { opacity: 0, y: 28 },
@@ -358,15 +360,18 @@ export default function Home() {
 
       <Section id="why" eyebrow="Why Choose Us" title="Premium execution for brands that want a sharper digital edge.">
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-          {whyUs.map(([title, copy], index) => (
-            <div key={title} className="glass-panel p-6 transition hover:-translate-y-1 hover:border-cyan/55">
-              <span className="mb-5 inline-flex rounded-lg bg-orange/12 p-3 text-orange">
-                {[Zap, Star, ShieldCheck, CheckCircle2][index]({ size: 25 })}
-              </span>
-              <h3 className="font-display text-xl font-black">{title}</h3>
-              <p className="mt-3 leading-7 text-slate-300">{copy}</p>
-            </div>
-          ))}
+          {whyUs.map(([title, copy], index) => {
+            const Icon = whyIcons[index];
+            return (
+              <div key={title} className="glass-panel p-6 transition hover:-translate-y-1 hover:border-cyan/55">
+                <span className="mb-5 inline-flex rounded-lg bg-orange/12 p-3 text-orange">
+                  <Icon size={25} />
+                </span>
+                <h3 className="font-display text-xl font-black">{title}</h3>
+                <p className="mt-3 leading-7 text-slate-300">{copy}</p>
+              </div>
+            );
+          })}
         </div>
       </Section>
 
@@ -566,7 +571,7 @@ function ContactCard({
   value,
   href
 }: {
-  icon: React.ElementType;
+  icon: ElementType;
   label: string;
   value: string;
   href: string;

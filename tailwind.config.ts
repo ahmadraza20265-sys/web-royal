@@ -8,23 +8,24 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        charcoal: "#070604",
-        graphite: "#10100f",
-        gold: "#d9a441",
-        cream: "#faf7f0",
-        copper: "#b66b2e"
+        ink: "#05070d",
+        midnight: "#0b1020",
+        cyan: "#00c2ff",
+        orange: "#ff7a18",
+        frost: "#f8fbff"
       },
       fontFamily: {
         sans: ["var(--font-inter)", "Inter", "sans-serif"],
         display: ["var(--font-space)", "Inter", "sans-serif"]
       },
       boxShadow: {
-        "gold": "0 20px 60px rgba(217, 164, 65, 0.24)",
+        "cyan": "0 20px 60px rgba(0, 194, 255, 0.24)",
+        "orange": "0 20px 60px rgba(255, 122, 24, 0.24)",
         "panel": "0 24px 90px rgba(0, 0, 0, 0.45)"
       },
       backgroundImage: {
         "radial-grid":
-          "radial-gradient(circle at center, rgba(217, 164, 65, 0.14), transparent 42%)"
+          "radial-gradient(circle at center, rgba(0, 194, 255, 0.14), transparent 42%)"
       }
     }
   },
