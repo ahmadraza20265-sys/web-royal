@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "NovaSpark Digital Agency | AI-Powered Websites, Automation, and Content",
+  title: "Liberty Digital Hub | Digital Investment Education & Online Income Guidance",
   description:
-    "NovaSpark Digital Agency helps businesses grow with website development, AI automation, and content creation."
+    "Liberty Digital Hub helps individuals grow through smart digital opportunities, affiliate marketing education, online income systems, and financial growth strategies."
 };
 
 export default function RootLayout({
