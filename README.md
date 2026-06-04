@@ -1,17 +1,31 @@
-# NovaSpark Digital Website
+# Royal Mango Crates
 
-Premium futuristic agency website for NovaSpark Digital, built with Next.js, Tailwind CSS, and Framer Motion.
+Premium static business website for Royal Mango Crates, built with Next.js 15, TypeScript, Tailwind CSS, and Framer Motion.
 
-## Run Locally
+## Pages
+
+- Home
+- About Us
+- Mango Varieties
+- Gallery
+- Contact
+
+## Ordering
+
+All order actions open WhatsApp at `https://wa.me/923290832502`.
+
+The contact form does not store data or call a backend. It formats the entered inquiry details and opens WhatsApp for direct confirmation.
+
+## Development
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+## Production
 
-## Contact
-
-- WhatsApp: +923296104859
-- Email: novasparkahmad@gmail.com
+```bash
+npm run build
+npm run start
+```

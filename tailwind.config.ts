@@ -20,8 +20,14 @@ const config: Config = {
         "liberty-gold-bright": "#ffd86a"
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "Inter", "sans-serif"],
-        display: ["var(--font-space)", "Inter", "sans-serif"]
+        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"]
+      },
+      borderRadius: {
+        lg: "0.5rem",
+        xl: "0.5rem",
+        "2xl": "0.5rem",
+        "3xl": "0.5rem"
       },
       boxShadow: {
         "cyan": "0 20px 60px rgba(0, 194, 255, 0.24)",

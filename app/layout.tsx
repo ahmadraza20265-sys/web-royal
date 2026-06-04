@@ -1,20 +1,63 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import Script from "next/script";
+import { FloatingWhatsApp, SiteFooter, SiteHeader } from "@/components/site-shell";
+import { brand } from "@/lib/data";
 import "./globals.css";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://royalmangocrates.com";
+
 export const metadata: Metadata = {
-  title: "Liberty Digital Hub | Digital Investment Education & Online Income Guidance",
-  description:
-    "Liberty Digital Hub helps individuals grow through smart digital opportunities, affiliate marketing education, online income systems, and financial growth strategies."
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Royal Mango Crates | Premium Pakistani Mangoes",
+    template: "%s | Royal Mango Crates"
+  },
+  description: "Premium Pakistani mangoes delivered fresh from carefully selected orchards.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "Royal Mango Crates | Premium Pakistani Mangoes",
+    description: "Premium Pakistani mangoes delivered fresh from carefully selected orchards.",
+    url: siteUrl,
+    siteName: "Royal Mango Crates",
+    images: [{ url: "/royal-crates-banner.jpg", width: 960, height: 400, alt: "Royal Mango Crates premium mangoes" }],
+    locale: "en_PK",
+    type: "website"
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Royal Mango Crates | Premium Pakistani Mangoes",
+    description: "Premium Pakistani mangoes delivered fresh from carefully selected orchards.",
+    images: ["/royal-crates-banner.jpg"]
+  }
 };
 
-export default function RootLayout({
-  children
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#08200f"
+};
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: brand.name,
+    url: siteUrl,
+    image: `${siteUrl}/royal-crates-banner.jpg`,
+    telephone: brand.whatsappDisplay,
+    sameAs: [brand.instagram, brand.facebook],
+    description: "Premium Pakistani mangoes delivered fresh from carefully selected orchards."
+  };
+
   return (
     <html lang="en" className="scroll-smooth">
-      <body>{children}</body>
+      <body>
+        <SiteHeader />
+        {children}
+        <SiteFooter />
+        <FloatingWhatsApp />
+        <Script id="schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      </body>
     </html>
   );
 }
