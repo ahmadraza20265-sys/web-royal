@@ -24,7 +24,7 @@ import {
   Truck,
   X
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { assets, brand, collections, galleryItems, mangoVarieties, testimonials } from "@/lib/data";
 import { Badge } from "./ui/badge";
 import { Button, ButtonLink } from "./ui/button";
@@ -317,12 +317,54 @@ function CollectionBlock({ collection }: { collection: (typeof collections)[numb
           Enquire Now <MessageCircle size={17} />
         </ButtonLink>
       </div>
-      <div className="grid gap-5 md:grid-cols-3">
+      <ProductCarousel products={products} label={collection.name} />
+    </section>
+  );
+}
+
+function ProductCarousel({ products, label }: { products: Array<(typeof mangoVarieties)[number]>; label: string }) {
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  function scrollTrack(direction: "left" | "right") {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const firstCard = track.querySelector<HTMLElement>("[data-carousel-card]");
+    const distance = firstCard ? firstCard.offsetWidth + 20 : track.clientWidth * 0.86;
+    track.scrollBy({ left: direction === "left" ? -distance : distance, behavior: "smooth" });
+  }
+
+  return (
+    <div className="relative">
+      <div className="mb-4 flex justify-end gap-2">
+        <button
+          type="button"
+          aria-label={`Previous ${label}`}
+          onClick={() => scrollTrack("left")}
+          className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-[#D4AF37]/35 bg-white/[0.08] text-[#D4AF37] shadow-lg shadow-black/10 transition hover:bg-[#D4AF37] hover:text-[#013220]"
+        >
+          <ChevronLeft size={20} />
+        </button>
+        <button
+          type="button"
+          aria-label={`Next ${label}`}
+          onClick={() => scrollTrack("right")}
+          className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-[#D4AF37]/35 bg-white/[0.08] text-[#D4AF37] shadow-lg shadow-black/10 transition hover:bg-[#D4AF37] hover:text-[#013220]"
+        >
+          <ChevronRight size={20} />
+        </button>
+      </div>
+      <div
+        ref={trackRef}
+        className="no-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-3 [-webkit-overflow-scrolling:touch]"
+      >
         {products.map((mango) => (
-          <ProductCard key={`${collection.id}-${mango.name}`} mango={mango} />
+          <div key={`${label}-${mango.name}`} data-carousel-card className="min-w-[86%] snap-start sm:min-w-[48%] lg:min-w-[31.5%]">
+            <ProductCard mango={mango} />
+          </div>
         ))}
       </div>
-    </section>
+    </div>
   );
 }
 
@@ -385,27 +427,68 @@ function FeaturedVarieties() {
           dark={false}
           centered
         />
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {mangoVarieties.map((mango, index) => (
-            <motion.div
-              key={mango.name}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.05 }}
-              className="group bg-white p-3 shadow-xl shadow-[#013220]/8"
-            >
-              <div className="relative aspect-square overflow-hidden">
-                <Image src={mango.image} alt={mango.name} fill sizes="(min-width: 1024px) 20vw, 50vw" className="object-cover transition duration-700 group-hover:scale-110" />
-              </div>
-              <h3 className="mt-4 text-center text-lg font-black">{mango.name}</h3>
-              <p className="mx-auto mt-2 max-w-40 text-center text-xs font-bold uppercase tracking-[0.12em] text-[#013220]/48">{mango.taste}</p>
-            </motion.div>
-          ))}
-        </div>
+        <FeaturedVarietiesCarousel />
       </div>
     </section>
+  );
+}
+
+function FeaturedVarietiesCarousel() {
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  function scrollTrack(direction: "left" | "right") {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const firstCard = track.querySelector<HTMLElement>("[data-variety-card]");
+    const distance = firstCard ? firstCard.offsetWidth + 16 : track.clientWidth * 0.72;
+    track.scrollBy({ left: direction === "left" ? -distance : distance, behavior: "smooth" });
+  }
+
+  return (
+    <div className="relative mt-12">
+      <div className="mb-4 flex justify-end gap-2">
+        <button
+          type="button"
+          aria-label="Previous featured varieties"
+          onClick={() => scrollTrack("left")}
+          className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-[#013220]/15 bg-white text-[#013220] shadow-lg shadow-[#013220]/8 transition hover:bg-[#D4AF37]"
+        >
+          <ChevronLeft size={20} />
+        </button>
+        <button
+          type="button"
+          aria-label="Next featured varieties"
+          onClick={() => scrollTrack("right")}
+          className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-[#013220]/15 bg-white text-[#013220] shadow-lg shadow-[#013220]/8 transition hover:bg-[#D4AF37]"
+        >
+          <ChevronRight size={20} />
+        </button>
+      </div>
+      <div
+        ref={trackRef}
+        className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-3 [-webkit-overflow-scrolling:touch]"
+      >
+        {mangoVarieties.map((mango, index) => (
+          <motion.div
+            key={mango.name}
+            data-variety-card
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: index * 0.05 }}
+            className="group min-w-[74%] snap-start bg-white p-3 shadow-xl shadow-[#013220]/8 sm:min-w-[42%] lg:min-w-[23%]"
+          >
+            <div className="relative aspect-square overflow-hidden">
+              <Image src={mango.image} alt={mango.name} fill sizes="(min-width: 1024px) 23vw, 74vw" className="object-cover transition duration-700 group-hover:scale-110" />
+            </div>
+            <h3 className="mt-4 text-center text-lg font-black">{mango.name}</h3>
+            <p className="mx-auto mt-2 max-w-40 text-center text-xs font-bold uppercase tracking-[0.12em] text-[#013220]/48">{mango.taste}</p>
+          </motion.div>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -700,10 +783,8 @@ export function AboutContent() {
 export function VarietiesPageContent() {
   return (
     <section className="bg-[#013220] px-4 py-20 text-white sm:px-6 lg:px-8">
-      <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {mangoVarieties.map((mango) => (
-          <ProductCard key={mango.name} mango={mango} />
-        ))}
+      <div className="mx-auto max-w-7xl">
+        <ProductCarousel products={[...mangoVarieties]} label="Premium mango varieties" />
       </div>
     </section>
   );
