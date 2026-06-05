@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { FloatingWhatsApp, SiteFooter, SiteHeader } from "@/components/site-shell";
-import { brand } from "@/lib/data";
+import { assets, brand } from "@/lib/data";
 import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://royalmangocrates.com";
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     description: "Premium Pakistani mangoes delivered fresh from carefully selected orchards.",
     url: siteUrl,
     siteName: "Royal Mango Crates",
-    images: [{ url: "/royal-crates-banner.jpg", width: 960, height: 400, alt: "Royal Mango Crates premium mangoes" }],
+    images: [{ url: assets.banner, width: 960, height: 400, alt: "Royal Mango Crates premium mangoes" }],
     locale: "en_PK",
     type: "website"
   },
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Royal Mango Crates | Premium Pakistani Mangoes",
     description: "Premium Pakistani mangoes delivered fresh from carefully selected orchards.",
-    images: ["/royal-crates-banner.jpg"]
+    images: [assets.banner]
   }
 };
 
@@ -43,7 +43,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     "@type": "LocalBusiness",
     name: brand.name,
     url: siteUrl,
-    image: `${siteUrl}/royal-crates-banner.jpg`,
+    image: `${siteUrl}${assets.banner}`,
     telephone: brand.whatsappDisplay,
     sameAs: [brand.instagram, brand.facebook],
     description: "Premium Pakistani mangoes delivered fresh from carefully selected orchards."
